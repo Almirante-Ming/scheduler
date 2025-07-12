@@ -29,8 +29,23 @@ def create_app(config_class=Config):
     migrate = Migrate(app, db)
     jwt = JWTManager(app)
     
+    # CORS configuration for Docker and development
+    allowed_origins = [
+        "http://localhost:3000", 
+        "http://localhost:5173", 
+        "http://localhost:5174",
+        "http://localhost:7070",
+        "http://127.0.0.1:7070",
+        "http://umbra-frontend:7070",
+        "http://172.19.0.3:7070"
+    ]
+    
+    # Allow all origins from Docker network in development
+    if os.getenv("FLASK_ENV") == "development" or os.getenv("DOCKER_ENV") == "true":
+        allowed_origins = ["*"]  # Allow all origins in Docker development mode
+    
     CORS(app, 
-         origins=["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"],
+         origins=allowed_origins,
          allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
          methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
          supports_credentials=True

@@ -1,4 +1,3 @@
-
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.exceptions import BadRequest, Unauthorized
@@ -8,6 +7,12 @@ from datetime import timedelta
 
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
+
+
+@auth_bp.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    return jsonify({'status': 'healthy', 'service': 'lumus-api'}), 200
 
 
 @auth_bp.route('/login', methods=['POST'])

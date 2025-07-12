@@ -1,17 +1,67 @@
-### Building and running your application
+# Scheduler Docker Setup
 
-When you're ready, start your application by running:
-`docker compose up --build`.
+This repository contains a containerized setup for the Scheduler application with two services:
 
-### Deploying your application to the cloud
+- **Lumus**: Flask-based API backend
+- **Umbra**: React-based frontend
 
-First, build your image, e.g.: `docker build -t myapp .`.
-If your cloud uses a different CPU architecture than your development
-machine (e.g., you are on a Mac M1 and your cloud provider is amd64),
-you'll want to build the image for that platform, e.g.:
-`docker build --platform=linux/amd64 -t myapp .`.
+## Architecture
 
-Then, push it to your registry, e.g. `docker push myregistry.com/myapp`.
+```
+┌─────────────────┐         ┌─────────────────┐
+│     Umbra       │         │     Lumus       │
+│   (Frontend)    │◄────────┤   (Backend)     │
+│  Port: 7070     │         │  Port: 3001     │
+│  Node.js Alpine │         │ Python 3.13.5   │
+└─────────────────┘         └─────────────────┘
+         │                           │
+         └───────────────────────────┘
+              scheduler-network
+```
 
-Consult Docker's [getting started](https://docs.docker.com/go/get-started-sharing/)
-docs for more detail on building and pushing.
+## Quick Start
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Running the Application
+
+1. **Start the application**:
+   ```bash
+   ./docker-run.sh up
+   ```
+
+2. **Access the services**:
+   - **Frontend**: http://localhost:7070
+   - **Backend API**: http://localhost:3001
+
+### Available Commands
+
+```bash
+./docker-run.sh up      # Start the application
+./docker-run.sh down    # Stop the application
+./docker-run.sh build   # Build containers
+./docker-run.sh logs    # Show logs
+./docker-run.sh restart # Restart the application
+./docker-run.sh clean   # Clean up containers and volumes
+```
+
+### Manual Docker Compose Commands
+
+```bash
+# Start services
+docker compose up -d
+
+# Stop services
+docker compose down
+
+# View logs
+docker compose logs -f
+
+# Rebuild containers
+docker compose build
+```
+
+## Service Configuration
