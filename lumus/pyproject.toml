@@ -1,0 +1,64 @@
+[project]
+name = "lumus"
+version = "0.1.0"
+description = "Flask-based Laboratory Scheduler API"
+authors = [
+    {name = "V.Guilherme",email = "v.guilherme.barreto@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.0",
+    "flask-sqlalchemy>=3.1.1",
+    "flask-migrate>=4.0.7",
+    "flask-cors>=5.0.0",
+    "flask-jwt-extended>=4.6.0",
+    "python-dotenv>=1.0.0",
+    "marshmallow>=3.21.0",
+    "marshmallow-sqlalchemy>=1.0.0",
+    "werkzeug>=3.1.0",
+    "sqlalchemy>=2.0.36",
+    "alembic>=1.14.0",
+    "click>=8.1.0",
+    "python-dateutil>=2.8.0",
+    "bcrypt>=4.1.0",
+    "email-validator>=2.1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-flask>=1.3.0",
+    "pytest-cov>=4.1.0",
+    "flake8>=7.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0"
+]
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+  | migrations
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
